@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from .forms import ProfileForm, AddNewBookForm
+from django.contrib import messages
 
 from .models import Profile, Book
 
@@ -60,6 +61,7 @@ def AddNewBooks(request):
         form = AddNewBookForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Book added, waiting for approval')
             return redirect('index')
     else:
             form = AddNewBookForm()
