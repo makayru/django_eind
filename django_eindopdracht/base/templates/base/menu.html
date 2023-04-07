@@ -3,11 +3,12 @@
   <ul>
     {% if user.is_authenticated %}
       <li><a href="{% url 'index' %}">Home</a></li>
+      <li><a href="{% url 'books' %}">All Books</a></li>
       <li><a href="{% url 'logout' %}" class="nav-item">Logout</a></li>
-      {% else %}
-      <li><a href="{% url 'register' %}" class="nav-item">Register</a></li>
+      <li><a href="{% url 'myprofile' %}" class="nav-item">My Profile</a></li>
+    {% else %}
       <li><a href="{% url 'login' %}" class="nav-item">Login</a></li>
-      {% endif %}
-
+      <li><a href="{% url 'register' %}" class="nav-item">Register</a></li>
+    {% endif %}
   </ul>
 </nav>

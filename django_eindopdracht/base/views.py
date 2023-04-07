@@ -2,18 +2,23 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from .forms import ProfileForm
+from .forms import ProfileForm, AddNewBookForm
 
-from .models import Profile
+from .models import Profile, Book
 
 # Create your views here.
 @login_required
 def index(request):
+    username = request.user.username
+    context = {'username': username}
+    return render(request, 'base/index.html', context)
 
+@login_required
+def MyProfile(request):
     username = request.user.username
     userprofile = Profile.objects.filter(user=request.user)
-    context = {'username': username, 'userprofile': userprofile}
-    return render(request, 'base/index.html', context)
+    context = {'userprofile': userprofile, 'username': username}
+    return render(request, 'base/profile.html', context)
 
 @login_required
 def edit_profile(request, pk):
@@ -30,6 +35,12 @@ def edit_profile(request, pk):
     context = {'form': form}
     return render(request, 'base/profileform.html', context)
 
+@login_required
+def AllBooks(request):
+    books = Book.objects.all()
+    context = {'books': books}
+    return render(request, 'base/books.html', context)
+
 def register(requests):
     if requests.method == 'POST':
         form = UserCreationForm(requests.POST)
@@ -42,3 +53,15 @@ def register(requests):
     
     context = {"form": form}
     return render(requests, 'registration/register.html', context)
+
+@login_required
+def AddNewBooks(request):
+    if request.method == 'POST':
+        form = AddNewBookForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    else:
+            form = AddNewBookForm()
+    context = {"form": form}
+    return render(request, 'base/newbookform.html', context)

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Profile
+from .models import Profile, Book
 
 
 class ProfileForm(forms.ModelForm):
@@ -7,4 +7,8 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = ['BioText', 'City']
 
-    
+
+class AddNewBookForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = ['Title', 'Author', 'Genre', 'NumberOfPages']
