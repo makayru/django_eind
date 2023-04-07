@@ -37,7 +37,7 @@ def edit_profile(request, pk):
 
 @login_required
 def AllBooks(request):
-    books = Book.objects.all()
+    books = Book.objects.filter(Apporved=True)
     context = {'books': books}
     return render(request, 'base/books.html', context)
 
