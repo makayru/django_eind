@@ -1,0 +1,22 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+  <div class="container">
+    <div class="row justify-content-center">
+      {% for i in userprofile %}
+        <div class="col-md-6">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">{{ i.user }}</h5>
+              <p class="card-text">
+                <strong>Bio: </strong>{{ i.BioText }}<br>
+                <strong>City: </strong>{{ i.City }} <br>
+                <a href="{% url 'edit_profile' i.pk %}" class="btn btn-primary">Edit</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
