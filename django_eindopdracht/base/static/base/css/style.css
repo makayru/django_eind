@@ -1,50 +1,78 @@
-body{
-    background-color: #535353;
-}
-
-h1{
-    font-family: 'sans-serif';
-    font-weight: 700;
-    font-size: 4em;
-    font-style: normal;
-    color: #c4c4c4;
-}
-
-a{
-    font-family: 'Roboto';
-    color: #DEF2f1;
-}
-
-p{
-    font-family: 'Roboto';
-    font-size:16px;
-    color: #DEF2f1;
-}
-
-img{
-    opacity: 0.5;
-}
-
-ul{
+:root {
+    --primary-color: #635985;
+    --secondary-color: #443C68;
+    --tertiary-color: #393053;
+    --dark-color: #18122B;
+  }
+  
+/* menu styling */
+  ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
-
-}
-
-li{
+  }
+  
+  li {
     float: left;
-}
-
-li a{
+  }
+  
+  li a {
     display: block;
-    color: #DEF2f1;
+    color: var(--primary-color);
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-}
+  }
+  
+  li a:hover {
+    color: var(--tertiary-color);
+  }
+  
 
-li a:hover{
-    color: #17252A;
-}
+  body{
+    background-color: var(--primary-color);
+  }
+
+  /* form styling */
+  .form-label {
+    color: var(--primary-color);
+  }
+  
+  .form-control {
+    background-color: var(--tertiary-color);
+    border-color: var(--primary-color);
+    color: var(--dark-color);
+  }
+  
+  .btn-primary {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+  }
+  
+  .btn-primary:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+  
+  .btn-primary:focus {
+    box-shadow: 0 0 0 0.2rem var(--primary-color);
+  }
+  
+  .form-container {
+    border: 1px solid var(--primary-color);
+    padding: 2rem;
+    border-radius: 1rem;
+  }
+  
+/* card styling (see All Books Page for example ) */
+  
+  .card-title {
+    color: var(--primary-color);
+  }
+  
+  .card-text strong {
+    color: var(--dark-color);
+  }
+
+  

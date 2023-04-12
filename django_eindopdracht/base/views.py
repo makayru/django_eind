@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import CustomUserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from .forms import ProfileForm, AddNewBookForm
@@ -10,7 +11,8 @@ from .models import Profile, Book
 @login_required
 def index(request):
     username = request.user.username
-    context = {'username': username}
+    userprofile = Profile.objects.filter(user=request.user)
+    context = {'userprofile': userprofile, 'username': username}
     return render(request, 'base/index.html', context)
 
 @login_required
@@ -32,7 +34,7 @@ def edit_profile(request, pk):
     else:
         form = ProfileForm(instance=profile)
 
-    context = {'form': form}
+    context = {'form': form, "username": request.user.username}
     return render(request, 'base/profileform.html', context)
 
 @login_required

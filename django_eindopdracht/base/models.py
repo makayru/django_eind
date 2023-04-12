@@ -5,7 +5,7 @@ from django.db.models.signals import post_save
 
 # Create your models here.
 class Profile(models.Model):
-    BioText = models.TextField()
+    BioText = models.CharField(max_length=100)
     City = models.CharField(max_length=100)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     def __str__(self):

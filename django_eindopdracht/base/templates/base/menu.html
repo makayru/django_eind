@@ -5,10 +5,15 @@
       <li><a href="{% url 'index' %}">Home</a></li>
       <li><a href="{% url 'books' %}">All Books</a></li>
       <li><a href="{% url 'logout' %}" class="nav-item">Logout</a></li>
-      <li><a href="{% url 'myprofile' %}" class="nav-item">My Profile</a></li>
+      {% for i in userprofile %}
+        <li><a href="{% url 'my_profile' i.pk %}" class="nav-item">My Profile</a></li>
+      {% endfor %}
+      <li><a href="{% url 'addnewbook' %}" class="nav-item">Add Book</a></li>
     {% else %}
       <li><a href="{% url 'login' %}" class="nav-item">Login</a></li>
       <li><a href="{% url 'register' %}" class="nav-item">Register</a></li>
     {% endif %}
+
+
   </ul>
 </nav>
