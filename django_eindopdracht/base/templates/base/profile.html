@@ -1,15 +1,22 @@
 {% extends 'base/base.html' %}
+
 {% block content %}
-<h1>Hello {{username }}</h1>
-    {% for i in userprofile %}
-        <strong>Bio: </strong>{{ i.BioText }}<br>
-        <strong>City: </strong>{{ i.City }} <br>
-        <strong>user: </strong>{{ i.user }}<br>
-        {<a href="{% url 'edit_profile' i.pk %}">Edit</a>}
-  
-        <br>
-    {% endfor %}
-  
-
-
+  <div class="container">
+    <div class="row justify-content-center">
+      {% for i in userprofile %}
+        <div class="col-md-6">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">{{ i.user }}</h5>
+              <p class="card-text">
+                <strong>Bio: </strong>{{ i.BioText }}<br>
+                <strong>City: </strong>{{ i.City }} <br>
+                <a href="{% url 'edit_profile' i.pk %}" class="btn btn-primary">Edit</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}

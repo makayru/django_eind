@@ -1,12 +1,22 @@
 {% extends 'base/base.html' %}
+
 {% block content %}
-     {%for book in books%}
-        <strong>Title:</strong>{{ book.Title }}<br>
-        <strong>Author:</strong>{{ book.Author }}<br>
-        <strong>Genre:</strong>{{ book.Genre }}<br>
-        <strong>Number of Pages:</strong>{{ book.NumberOfPages }}<br>
-    {%endfor%}
-  
-
-
+  <div class="container">
+    <div class="row">
+      {% for book in books %}
+        <div class="col-md-6">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">{{ book.Title }}</h5>
+              <p class="card-text">
+                <strong>Author:</strong> {{ book.Author }}<br>
+                <strong>Genre:</strong> {{ book.Genre }}<br>
+                <strong>Number of Pages:</strong> {{ book.NumberOfPages }}<br>
+              </p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}

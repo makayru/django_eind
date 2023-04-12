@@ -1,11 +1,23 @@
-{%extends 'base/base.html'%}
+{% extends 'base/base.html' %}
 
-
-{%block content%}
-<form method="POST">
-    {% csrf_token %} 
-    {{ form.as_p }}
-    <input type="submit" value="Submit">
-</form>
-
-{%endblock content %}
+{% block content %}
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="form-container">
+          <form method="post" class="mx-auto">
+            {% csrf_token %}
+            <p>Username: <input type="text" name="username" value="{{ user.username }}" disabled /></p>
+            {% for field in form %}
+              <div class="form-group">
+                <label for="{{ field.id }}" class="form-label">{{ field.label }}</label>
+                {{ field }}
+              </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Edit Profile</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
