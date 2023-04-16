@@ -74,3 +74,17 @@ li a:hover {
   color: var(--dark-color);
 }
 
+.icon-text, .icon-text:hover {
+  text-decoration: none;
+  color: var(--primary-color) ;
+}
+
+.book-cover {
+  max-width: 80%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.book{
+  padding-bottom: 5%;
+}

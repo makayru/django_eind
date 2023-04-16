@@ -1,4 +1,63 @@
 {% extends 'base/base.html' %}
 {% block content %}
-<h1>Welcome {{username }}</h1>
+{% load static %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <!-- User information -->
+      <h1>User information</h1>
+        {% for user in userprofile %}
+            <p>{{user.user}}</p>
+            <p>{{user.BioText}}</p>
+            <p>{{user.City}}</p>
+        {% endfor %}
+    </div>
+    <div class="col-md-8">
+      <!-- Other content -->
+      <h1>Welcome to the Book Club!</h1>
+      <div>
+        <hr>
+        <div class="row">
+            <div class="col-md-6 book">
+                <h2><i class="bi bi-book-half"></i> All Books</h2>
+            </div>
+            <div class="col-md-6 text-md-right">
+                <a href={% url 'addnewbook'%} class="icon-text" ><i class="bi bi-plus-circle-fill"></i> Add a new book</a>
+            </div>
+            {% for book in books %}
+            <div class="col-md-3">
+                <img src="{% static 'base/images/' %}{{ book.id }}.jpg" alt="book image" class="book-cover">
+                <p>{{book.Title}}</p>
+            </div>
+            {% endfor %}
+            <div class="col-md-12 text-center">
+                <a href={% url 'books'%} class="icon-text" >VIEW ALL BOOKS</a>
+    
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-6 book">
+                <h2><i class="bi bi-book-half"></i> My ReadActions</h2>
+            </div>
+            <div class="col-md-6 text-md-right">
+                <a href={% url 'addreadaction'%} class="icon-text" ><i class="bi bi-plus-circle-fill"></i> Add a new read action</a>
+            </div>
+        
+            <div class="col-md-3">
+                
+                <p>NO READ ACTIONS FOUND YET</p>
+            </div>
+            
+            <div class="col-md-12 text-center">
+                <a href="#" class="icon-text" >VIEW ALL READ ACTIONS</a>
+    
+            </div>
+        </div>
+
+        </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

@@ -9,9 +9,10 @@ from .models import Profile, Book
 # Create your views here.
 @login_required
 def index(request):
+    books = Book.objects.filter(Apporved=True)
     username = request.user.username
     userprofile = Profile.objects.filter(user=request.user)
-    context = {'userprofile': userprofile, 'username': username}
+    context = {'userprofile': userprofile, 'username': username, 'books': books}
     return render(request, 'base/index.html', context)
 
 @login_required
@@ -77,12 +78,6 @@ def AddReadAction(request):
         form = AddReadActionForm()
     context = {"form": form}
     return render(request, 'base/newbookform.html', context)
-
-
-
-
-
-
 
 
 @login_required
