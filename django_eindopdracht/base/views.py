@@ -69,6 +69,18 @@ def AddNewBooks(request):
     context = {"form": form}
     return render(request, 'base/newbookform.html', context)
 
+def AddReadAction(request):
+    if request.method == 'POST':
+        form = AddReadActionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    else:
+        form = AddReadActionForm()
+    context = {"form": form}
+    return render(request, 'base/newbookform.html', context)
+
+
 @login_required
 def UnapprovedBooks(request):
     books = Book.objects.filter(Apporved=False)
