@@ -27,5 +27,7 @@ urlpatterns = [
     path('my_profile/<int:pk>/', views.edit_profile, name='my_profile'),
     path('addnewbook/', views.AddNewBooks, name='addnewbook'),
     path('books/', views.AllBooks, name='books'),
+    path('unapprovedbooks/', views.UnapprovedBooks, name='unapprovedbooks'),
+    path('approve/<int:book_id>/', views.Approve_book, name='approve_book'),
 
 ]

@@ -38,7 +38,7 @@ def edit_profile(request, pk):
 
 @login_required
 def AllBooks(request):
-    books = Book.objects.all()
+    books = Book.objects.filter(Apporved=True)
     context = {'books': books}
     return render(request, 'base/books.html', context)
 
@@ -66,3 +66,17 @@ def AddNewBooks(request):
             form = AddNewBookForm()
     context = {"form": form}
     return render(request, 'base/newbookform.html', context)
+
+@login_required
+def UnapprovedBooks(request):
+    books = Book.objects.filter(Apporved=False)
+    context = {'books': books}
+    return render(request, 'base/unapprovedbooks.html', context)
+
+@login_required
+def Approve_book(request, book_id):
+    book = Book.objects.get(id=book_id)
+    book.Apporved = True
+    book.ApporvedBy = request.user
+    book.save()
+    return redirect('unapprovedbooks')

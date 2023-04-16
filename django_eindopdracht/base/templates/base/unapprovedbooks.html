@@ -1,0 +1,28 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      {% for book in books %}
+        <div class="col-md-6">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">{{ book.Title }}</h5>
+              <p class="card-text">
+                <strong>Author:</strong> {{ book.Author }}<br>
+                <strong>Genre:</strong> {{ book.Genre }}<br>
+                <strong>Number of Pages:</strong> {{ book.NumberOfPages }}<br>
+              </p>
+                {% if not book.approved %}
+                <form action="{% url 'approve_book' book.id %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit">Approve</button>
+                </form>
+                {% endif %}            
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
