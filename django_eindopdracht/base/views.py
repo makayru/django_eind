@@ -2,16 +2,18 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from .forms import ProfileForm, AddNewBookForm
+from .forms import ProfileForm, AddNewBookForm, AddReadActionForm
+
 
 from .models import Profile, Book
 
 # Create your views here.
 @login_required
 def index(request):
+    books = Book.objects.filter(Apporved=True)
     username = request.user.username
     userprofile = Profile.objects.filter(user=request.user)
-    context = {'userprofile': userprofile, 'username': username}
+    context = {'userprofile': userprofile, 'username': username, 'books': books}
     return render(request, 'base/index.html', context)
 
 @login_required
