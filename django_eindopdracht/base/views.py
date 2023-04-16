@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from .forms import ProfileForm, AddNewBookForm
+from .forms import ProfileForm, AddNewBookForm, AddReadActionForm
 
 from .models import Profile, Book
 
@@ -66,6 +66,24 @@ def AddNewBooks(request):
             form = AddNewBookForm()
     context = {"form": form}
     return render(request, 'base/newbookform.html', context)
+
+def AddReadAction(request):
+    if request.method == 'POST':
+        form = AddReadActionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    else:
+        form = AddReadActionForm()
+    context = {"form": form}
+    return render(request, 'base/newbookform.html', context)
+
+
+
+
+
+
+
 
 @login_required
 def UnapprovedBooks(request):
