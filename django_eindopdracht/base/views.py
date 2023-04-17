@@ -119,11 +119,10 @@ def EditReadAction(request, pk):
 
 
 @login_required
-def DeleteReadAction(request, pk):
+def DeleteReadAction(pk):
     readaction = Read.objects.get(pk=pk)
-    Read.delete(readaction)
-    return render(request, "base/myreadactions.html")
-    
+    readaction.delete()
+    return redirect('my_read_actions')
 
 
 @login_required
