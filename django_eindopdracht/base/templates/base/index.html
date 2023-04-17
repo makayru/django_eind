@@ -26,13 +26,14 @@
                         <a href={% url 'addnewbook' %} class="icon-text"><i class="bi bi-plus-circle-fill"></i> Add a
                             new book</a>
                     </div>
-                    {% for book in books %}
+                    {% for book in books|slice:":4" %}
                     <div class="col-md-3">
                         <a href="{% url 'book_detail' book.id %}">
                             <img src="{% static 'base/images/' %}{{ book.id }}.jpg" alt="book image" class="book-cover">
                             <p>{{book.Title}}</p>
                         </a>
-                    </div>                      {% endfor %}
+                    </div>                      
+                    {% endfor %}
                     <div class="col-md-12 text-center">
                         <a href={% url 'books' %} class="icon-text">VIEW ALL BOOKS</a>
 
@@ -51,7 +52,7 @@
                             new read action</a>
                     </div>
 
-                    {% for read in readactions %}
+                    {% for read in readactions|slice:":4" %}
                     <div class="col-md-3">
                         <br>Book: {{read.Book}}
                         <br>Date: {{read.Date}}
