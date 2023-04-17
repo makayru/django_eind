@@ -52,6 +52,46 @@ def AllBooks(request):
     return render(request, "base/books.html", context)
 
 
+def AllBooksAdmin(request):
+    books = Book.objects.filter(Apporved=True)
+    context = {"books": books}
+    return render(request, "base/adminbooks.html", context)
+
+def DeleteBooksAdmin(request, pk):
+    book = Book.objects.get(pk=pk)
+    Book.delete(book)
+    return redirect("admin_books")
+
+def EditBooksAdmin(request, pk):
+    book = Book.objects.get(pk=pk)
+
+    if request.method == "POST":
+        form = AddNewBookForm(request.POST, instance=book)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "book updated succesfully.")
+            return redirect('admin_books')
+    else:
+        form = AddNewBookForm(instance=book)
+    
+    context = {"form": form}
+    return render(request, "base/newbookform.html", context)
+
+def AdminReadactions(request):
+    read_actions = Read.objects.all()
+    context = {"read_actions": read_actions}
+    return render(request, "base/adminreadactions.html", context)
+
+
+def DeleteReadActions(request, pk):
+    readaction = Read.objects.get(pk=pk)
+    Read.delete(readaction)
+    return redirect("admin_readactions")
+
+
+
+
+
 @login_required
 def MyReadActions(request):
     read_actions = Read.objects.all()
@@ -79,6 +119,23 @@ def AddNewBooks(request):
         form = AddNewBookForm(request.POST)
         if form.is_valid():
             form.save()
+            return redirect("index")
+    else:
+        form = AddNewBookForm()
+
+    context = {"form": form}
+    return render(request, "base/newbookform.html", context)
+
+
+
+def AddNewBooksAdmin(request):
+    if request.method == "POST":
+        form = AddNewBookForm(request.POST)
+        if form.is_valid():
+            book = form.save(commit=False)
+            book.Apporved = True
+            book.ApporvedBy = request.user
+            book.save()
             return redirect("index")
     else:
         form = AddNewBookForm()
