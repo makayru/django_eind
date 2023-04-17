@@ -1,4 +1,6 @@
 from django.contrib import messages
+from django.db.models import Avg
+from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth import login
