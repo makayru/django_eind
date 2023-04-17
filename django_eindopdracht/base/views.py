@@ -72,12 +72,14 @@ def AddReadAction(request):
     if request.method == 'POST':
         form = AddReadActionForm(request.POST)
         if form.is_valid():
-            form.save()
+            read_action = form.save(commit=False)
+            read_action.User = request.user
+            read_action.save()
             return redirect('index')
     else:
         form = AddReadActionForm()
     context = {"form": form}
-    return render(request, 'base/newbookform.html', context)
+    return render(request, 'base/newreadactionform.html', context)
 
 
 @login_required
