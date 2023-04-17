@@ -14,9 +14,10 @@
               </p>
               <form method="POST" action="{% url 'delete_readaction' i.pk %}">
                 {% csrf_token %}
+                <input type="hidden" name="action" value="delete">
                 <div class="row">
                   <div class="col-md-6">
-                    <button type="submit" class="btn btn-primary btn-block">Edit</button>
+                    <a href="{% url 'edit_readaction' i.pk %}" class="btn btn-primary btn-block">Edit</a>
                   </div>
                   <div class="col-md-6">
                     <button type="submit" class="btn btn-danger btn-block">Delete</button>
