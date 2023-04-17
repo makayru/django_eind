@@ -1,0 +1,23 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+{% load static %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <img src="{% static 'base/images/' %}{{ book.id }}.jpg" alt="book image" class="book-cover">
+        </div>
+        <div class="col-md-8">
+            <h1>{{book.Title}}</h1>
+            <h3>By <u>{{book.Author}}</u></h3>
+            <br>
+            <p>{% lorem 1 b random  %}</p>
+            <br>
+            <h4>{{read_count}} people have read this book</h4>
+            <br>
+            <h4>Average score: {{ average_score }}</h4>
+        </div>
+    </div>
+</div>
+{% endblock %}
