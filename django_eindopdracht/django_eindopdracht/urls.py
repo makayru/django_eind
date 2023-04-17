@@ -30,6 +30,10 @@ urlpatterns = [
     path('addreadaction/', views.AddReadAction, name='addreadaction'),
     path('addreadaction/<int:pk>', views.EditReadAction, name='edit_readaction'),
     path('deletereadaction/<int:pk>', views.DeleteReadAction, name='delete_readaction'),
+<<<<<<< Updated upstream
+=======
+    path('newsfeed', views.News_feed, name='newsfeed'),
+>>>>>>> Stashed changes
     path('books/', views.AllBooks, name='books'),
     path('myreadactions/', views.MyReadActions, name='myreadactions'),
     path('unapprovedbooks/', views.UnapprovedBooks, name='unapprovedbooks'),

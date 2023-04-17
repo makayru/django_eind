@@ -1,0 +1,23 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+  <div class="container">
+    <h3> News Feed </h3>
+    <p> Below are the latest book scores of all our members: </p>
+    <div class="row">
+      {% for action in read_actions %}
+        <div class="col-md-6">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">{{ action.Book }}</h5>
+              <p class="card-text">
+                <strong>Author:</strong> {{ action.Date }}<br>
+                <strong>Genre:</strong> {{ action.Score }}<br>
+              </p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
