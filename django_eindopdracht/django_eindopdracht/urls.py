@@ -29,6 +29,9 @@ urlpatterns = [
     path('addnewbook/', views.AddNewBooks, name='addnewbook'),
     path('addreadaction/', views.AddReadAction, name='addreadaction'),
     path('books/', views.AllBooks, name='books'),
+    
+    path('myreadactions/', views.MyReadActions, name='myreadactions'),
+
     path('unapprovedbooks/', views.UnapprovedBooks, name='unapprovedbooks'),
     path('approve/<int:book_id>/', views.Approve_book, name='approve_book'),
     path('change-password/', views.change_password, name='change_password'),

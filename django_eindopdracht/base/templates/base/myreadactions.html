@@ -1,0 +1,21 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      {% for r in readactions %}
+        <div class="col-md-6">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">{{ r.Book}}</h5>
+              <p class="card-text">
+                <strong>Date:</strong> {{ r.Date}}<br>
+                <strong>Score:</strong> {{ r.Score}}<br>   
+              </p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
