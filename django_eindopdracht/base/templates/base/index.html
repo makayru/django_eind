@@ -20,6 +20,26 @@
                 <hr>
                 <div class="row">
                     <div class="col-md-6 book">
+                        <h2><i class="bi bi-book-half"></i> News Feed</h2>
+                    </div>
+                    <div class="col-md-6 text-md-right">
+                        <a href={% url 'addreadaction' %} class="icon-text"><i class="bi bi-plus-circle-fill"></i> Add a
+                            new read action</a>
+                    </div>
+                    {% for feed in news_feed|slice:":4" %}
+                    <div class="col-md-3">
+                        <img src="{% static 'base/images/' %}{{ feed.Book.id }}.jpg" alt="book image" class="no-link-book-cover">
+                        <p><strong>User:</strong> {{feed.User}}</p>
+                        <p><strong>Score:</strong>{{feed.Score}}</p>
+                    </div>
+                    {% endfor %}
+                    <div class="col-md-12 text-center">
+                        <a href={% url 'newsfeed' %} class="icon-text">VIEW NEWS FEED</a>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6 book">
                         <h2><i class="bi bi-book-half"></i> All Books</h2>
                     </div>
                     <div class="col-md-6 text-md-right">
@@ -27,7 +47,7 @@
                     </div>
                     {% for book in books|slice:":4" %}
                     <div class="col-md-3">
-                        <a href="{% url 'book_detail' book.id %}">
+                        <a class="icon-text" href="{% url 'book_detail' book.id %}">
                             <img src="{% static 'base/images/' %}{{ book.id }}.jpg" alt="book image" class="book-cover">
                             <p>{{book.Title}}</p>
                         </a>
@@ -39,9 +59,6 @@
                     </div>
                 </div>
                 <hr>
-
-
-
                 <div class="row">
                     <div class="col-md-6 book">
                         <h2><i class="bi bi-book-half"></i> My Reads</h2>
@@ -50,17 +67,12 @@
                         <a href={% url 'addreadaction' %} class="icon-text"><i class="bi bi-plus-circle-fill"></i> Add a
                             new read action</a>
                     </div>
-
                     {% for read in readactions|slice:":4" %}
                     <div class="col-md-3">
-                        <br>Book: {{read.Book}}
-                        <br>Date: {{read.Date}}
-                        <br>Score: {{read.Score}}
-                        </br>
-                        </br>
-                        </br>
+                        <p><strong>Book:</strong> {{read.Book}}</p>
+                        <p><strong>Date:</strong> {{read.Date}}</p>
+                        <p><strong>Score:</strong> {{read.Score}}</p>
                     </div>
-
                     {% endfor %}
                     <div class="col-md-12 text-center">
                         <a href={% url 'myreadactions' %} class="icon-text">VIEW ALL MY READ ACTIONS</a>

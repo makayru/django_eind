@@ -1,19 +1,18 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-
-<h1>News Feed Page</h1><br></br>
-<h3>Below are the latest book scores of all our members:<h3><br></br>
   <div class="container">
+    <h3> News Feed </h3>
+    <p> Below are the latest book scores of all our members: </p>
     <div class="row">
-      {% for r in read_actions %}
+      {% for action in read_actions %}
         <div class="col-md-6">
           <div class="card mb-3">
             <div class="card-body">
-              <h5 class="card-title">{{r.Book }}</h5>
+              <h5 class="card-title">{{ action.Book }}</h5>
               <p class="card-text">
-                <strong>Date:</strong> {{ r.Date }}<br>
-                <strong>Score:</strong> {{ r.Score }}<br>
+                <strong>Author:</strong> {{ action.Date }}<br>
+                <strong>Genre:</strong> {{ action.Score }}<br>
               </p>
             </div>
           </div>

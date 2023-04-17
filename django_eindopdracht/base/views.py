@@ -13,11 +13,11 @@ from .models import Profile, Book, Read
 @login_required
 def index(request):
     books = Book.objects.filter(Apporved=True)
-
+    news_feed = Read.objects.all().order_by("-Date")[:10]
     readactions = Read.objects.filter(User=request.user)
     username = request.user.username
     userprofile = Profile.objects.filter(user=request.user)
-    context = {"userprofile": userprofile, "username": username, "books": books, "readactions": readactions}
+    context = {"userprofile": userprofile, "username": username, "books": books, "readactions": readactions, "news_feed": news_feed}
     return render(request, "base/index.html", context)
 
 
