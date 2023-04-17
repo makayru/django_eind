@@ -30,10 +30,16 @@ urlpatterns = [
     path('addreadaction/', views.AddReadAction, name='addreadaction'),
     path('addreadaction/<int:pk>', views.EditReadAction, name='edit_readaction'),
     path('deletereadaction/<int:pk>', views.DeleteReadAction, name='delete_readaction'),
+    path('newsfeed', views.News_feed, name='newsfeed'),
+
+
+
+
     path('books/', views.AllBooks, name='books'),
     path('myreadactions/', views.MyReadActions, name='myreadactions'),
     path('unapprovedbooks/', views.UnapprovedBooks, name='unapprovedbooks'),
     path('approve/<int:book_id>/', views.Approve_book, name='approve_book'),
     path('change-password/', views.change_password, name='change_password'),
     path('book/<int:book_id>/', views.book_detail, name='book_detail'),
+
 ]
