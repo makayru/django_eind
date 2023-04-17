@@ -1,8 +1,10 @@
-from django.shortcuts import render, redirect
+from django.db.models import Avg
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from .forms import ProfileForm, AddNewBookForm, AddReadActionForm
+
 from .models import Profile, Book, Read
 
 # Create your views here.
@@ -120,5 +122,12 @@ def change_password(request):
             return redirect("password_change_done")
     else:
         form = PasswordChangeForm(request.user)
-    return render(request, "registration/change_password.html", {"form": form})
+    return render(request, 'registration/change_password.html', {'form': form})
 
+@login_required
+def book_detail(request, book_id):
+    book = get_object_or_404(Book, id=book_id, Apporved=True)
+    read_count = Read.objects.filter(Book=book).count()
+    average_score = Read.objects.filter(Book=book).aggregate(Avg('Score'))['Score__avg']
+    context = {'book': book, 'read_count': read_count, 'average_score': average_score}
+    return render(request, 'base/book_detail.html', context)

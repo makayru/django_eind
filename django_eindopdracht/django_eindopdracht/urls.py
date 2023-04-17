@@ -35,4 +35,5 @@ urlpatterns = [
     path('unapprovedbooks/', views.UnapprovedBooks, name='unapprovedbooks'),
     path('approve/<int:book_id>/', views.Approve_book, name='approve_book'),
     path('change-password/', views.change_password, name='change_password'),
+    path('book/<int:book_id>/', views.book_detail, name='book_detail'),
 ]
