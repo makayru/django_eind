@@ -28,10 +28,10 @@ urlpatterns = [
     path('my_profile/<int:pk>/', views.edit_profile, name='my_profile'),
     path('addnewbook/', views.AddNewBooks, name='addnewbook'),
     path('addreadaction/', views.AddReadAction, name='addreadaction'),
+    path('addreadaction/<int:pk>', views.EditReadAction, name='edit_readaction'),
+    path('deletereadaction/<int:pk>', views.DeleteReadAction, name='delete_readaction'),
     path('books/', views.AllBooks, name='books'),
-    
     path('myreadactions/', views.MyReadActions, name='myreadactions'),
-
     path('unapprovedbooks/', views.UnapprovedBooks, name='unapprovedbooks'),
     path('approve/<int:book_id>/', views.Approve_book, name='approve_book'),
     path('change-password/', views.change_password, name='change_password'),

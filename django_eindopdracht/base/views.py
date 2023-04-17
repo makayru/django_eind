@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth import login
@@ -9,9 +10,11 @@ from .models import Profile, Book, Read
 @login_required
 def index(request):
     books = Book.objects.filter(Apporved=True)
+
+    readactions = Read.objects.filter(User=request.user)
     username = request.user.username
     userprofile = Profile.objects.filter(user=request.user)
-    context = {"userprofile": userprofile, "username": username, "books": books}
+    context = {"userprofile": userprofile, "username": username, "books": books, "readactions": readactions}
     return render(request, "base/index.html", context)
 
 
@@ -48,8 +51,8 @@ def AllBooks(request):
 
 @login_required
 def MyReadActions(request):
-    readactions = Read.objects.all()
-    context = {"readactions": readactions}
+    read_actions = Read.objects.all()
+    context = {"read_actions": read_actions}
     return render(request, "base/myreadactions.html", context)
 
 
@@ -80,6 +83,7 @@ def AddNewBooks(request):
     return render(request, "base/newbookform.html", context)
 
 
+@login_required
 def AddReadAction(request):
     if request.method == "POST":
         form = AddReadActionForm(request.POST)
@@ -92,6 +96,31 @@ def AddReadAction(request):
         form = AddReadActionForm()
     context = {"form": form}
     return render(request, "base/newreadactionform.html", context)
+
+
+@login_required
+def EditReadAction(request, pk):
+    readaction = Read.objects.get(pk=pk)
+
+    if request.method == "POST":
+        form = AddReadActionForm(request.POST, instance=readaction)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Read action updated succesfully.")
+            return redirect('index')
+    else:
+        form = AddReadActionForm(instance=readaction)
+    
+    context = {"form": form}
+    return render(request, "base/newreadactionform.html", context)
+
+
+@login_required
+def DeleteReadAction(request, pk):
+    readaction = Read.objects.get(pk=pk)
+    Read.delete(readaction)
+    return render(request, "base/myreadactions.html")
+    
 
 
 @login_required
