@@ -1,21 +1,25 @@
 {% extends 'base/base.html' %}
 
+
 {% block content %}
-  <div class="container">
-    <div class="row">
-      {% for r in readactions %}
-        <div class="col-md-6">
-          <div class="card mb-3">
-            <div class="card-body">
-              <h5 class="card-title">{{ r.Book}}</h5>
-              <p class="card-text">
-                <strong>Date:</strong> {{ r.Date}}<br>
-                <strong>Score:</strong> {{ r.Score}}<br>   
-              </p>
+<div class="container">
+    <div class="container">
+        <div class="row justify-content-center"></div>
+          {% for i in read_actions %}
+            <div class="col-md-6">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <h5 class="card-title">{{ i.Date}}</h5>
+                  <p class="card-text">
+                    <strong>Book: </strong> {{i.Book}}<br>
+                    <strong>Score: </strong> {{i.Score}}<br>  
+                    <a href="{% url 'edit_readaction' i.pk %} "> edit</a><br>
+                    <a href="{% url 'delete_readaction' i.pk %} "> delete </a><br>
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      {% endfor %}
+        {% endfor %}
     </div>
-  </div>
+</div>
 {% endblock %}
