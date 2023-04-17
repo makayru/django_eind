@@ -8,6 +8,8 @@
     <li><a href="{% url 'myprofile' %}" class="nav-item">My Profile</a></li>    
     <li><a href="{% url 'addnewbook' %}" class="nav-item">Add Book</a></li>
     <li><a href="{% url 'addreadaction' %}" class="nav-item">Add Read Action</a></li>
+    <li><a href="{% url 'newsfeed' %}" class="nav-item">News feed</a></li>
+
 
     {% if user.is_staff%}
     <li><a href="{% url 'unapprovedbooks' %}" class="nav-item">Unapproved Books</a></li>

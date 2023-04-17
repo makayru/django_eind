@@ -161,3 +161,11 @@ def book_detail(request, book_id):
     average_score = Read.objects.filter(Book=book).aggregate(Avg('Score'))['Score__avg']
     context = {'book': book, 'read_count': read_count, 'average_score': average_score}
     return render(request, 'base/book_detail.html', context)
+
+
+@login_required
+def News_feed(request):
+    read_actions = Read.objects.all()
+    context = {"read_actions": read_actions}
+    return render(request, "base/newsfeed.html", context)
+
