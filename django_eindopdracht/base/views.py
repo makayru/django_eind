@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from .forms import ProfileForm, AddNewBookForm, AddReadActionForm
@@ -95,3 +95,15 @@ def Approve_book(request, book_id):
     book.ApporvedBy = request.user
     book.save()
     return redirect('unapprovedbooks')
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            form.save()
+            # Redirect to the success page after changing the password
+            return redirect('password_change_done')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'registration/change_password.html', {'form': form})

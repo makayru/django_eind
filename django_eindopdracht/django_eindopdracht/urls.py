@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from base import views
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", views.index, name='index'),
@@ -29,5 +30,6 @@ urlpatterns = [
     path('addreadaction/', views.AddReadAction, name='addreadaction'),
     path('books/', views.AllBooks, name='books'),
     path('unapprovedbooks/', views.UnapprovedBooks, name='unapprovedbooks'),
-    path('approve/<int:book_id>/', views.Approve_book, name='approve_book')
+    path('approve/<int:book_id>/', views.Approve_book, name='approve_book'),
+    path('change-password/', views.change_password, name='change_password'),
 ]
