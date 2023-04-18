@@ -34,6 +34,7 @@ urlpatterns = [
     path("admin_readactions", views.AdminReadactions, name="admin_readactions" ),
     path("delete_read/<int:pk>", views.DeleteReadActions, name="delete_read"),
     path("addreadaction/", views.AddReadAction, name="addreadaction"),
+    path("extaddreadaction/<int:book_id>", views.ExtAddReadAction, name="extaddreadaction"),
     path("addreadaction/<int:pk>", views.EditReadAction, name="edit_readaction"),
     path("deletereadaction/<int:pk>", views.DeleteReadAction, name="delete_readaction"),
     path("newsfeed", views.News_feed, name="newsfeed"),
