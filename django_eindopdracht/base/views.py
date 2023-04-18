@@ -222,7 +222,7 @@ def book_detail(request, book_id):
 
 @login_required
 def News_feed(request):
-    read_actions = Read.objects.all()
+    read_actions = Read.objects.all().order_by('-Date')
     context = {"read_actions": read_actions}
     return render(request, "base/newsfeed.html", context)
 
