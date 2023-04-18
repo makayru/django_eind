@@ -149,13 +149,21 @@ def AddReadAction(request):
         form = AddReadActionForm(request.POST)
         if form.is_valid():
             read_action = form.save(commit=False)
-            read_action.User = request.user
-            read_action.save()
-            return redirect("index")
+            # Check if a read action for the same book and date already exists for the current user
+            existing_read_action = Read.objects.filter(User=request.user, Book=read_action.Book, Date=read_action.Date).exists()
+            if existing_read_action:
+                messages.error(request, 'You have already added a read action for this book on the same day.')
+                return redirect("myreadactions")
+            else:
+                read_action.User = request.user
+                read_action.save()
+                messages.success(request, 'Your read action has been added successfully.')
+            return redirect("myreadactions")
     else:
         form = AddReadActionForm()
     context = {"form": form}
     return render(request, "base/newreadactionform.html", context)
+
 
 
 @login_required
