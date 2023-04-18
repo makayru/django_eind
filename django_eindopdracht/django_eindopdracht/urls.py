@@ -28,18 +28,11 @@ urlpatterns = [
     path("my_profile/<int:pk>/", views.edit_profile, name="my_profile"),
     path("addnewbook/", views.AddNewBooks, name="addnewbook"),
     path("add_newbook/", views.AddNewBooksAdmin, name="add_newbook"),
-
-
     path("admin_books", views.AllBooksAdmin, name="admin_books"),
     path("delete_book/<int:pk>", views.DeleteBooksAdmin, name="delete_book"),
     path("edit_book/<int:pk>", views.EditBooksAdmin, name="edit_book"),
-
     path("admin_readactions", views.AdminReadactions, name="admin_readactions" ),
     path("delete_read/<int:pk>", views.DeleteReadActions, name="delete_read"),
-
-
-
-
     path("addreadaction/", views.AddReadAction, name="addreadaction"),
     path("addreadaction/<int:pk>", views.EditReadAction, name="edit_readaction"),
     path("deletereadaction/<int:pk>", views.DeleteReadAction, name="delete_readaction"),
@@ -50,4 +43,5 @@ urlpatterns = [
     path("approve/<int:book_id>/", views.Approve_book, name="approve_book"),
     path("change-password/", views.change_password, name="change_password"),
     path("book/<int:book_id>/", views.book_detail, name="book_detail"),
+    path('user/<int:pk>/', views.user_profile, name='user_profile'),
 ]

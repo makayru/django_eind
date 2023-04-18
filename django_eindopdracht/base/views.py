@@ -32,8 +32,10 @@ def index(request):
 @login_required
 def MyProfile(request):
     username = request.user.username
+    
+    reads = Read.objects.filter(User=request.user)
     userprofile = Profile.objects.filter(user=request.user)
-    context = {"userprofile": userprofile, "username": username}
+    context = {"userprofile": userprofile, "username": username, "reads": reads}
     return render(request, "base/profile.html", context)
 
 
@@ -252,3 +254,9 @@ def News_feed(request):
     context = {"read_actions": read_actions}
     return render(request, "base/newsfeed.html", context)
 
+def user_profile(request, pk):
+    user = get_object_or_404(Profile, pk=pk)
+    reads = Read.objects.filter(User_id=pk)
+
+    context = {'profile': user, 'reads': reads}
+    return render(request, 'base/profiles.html', context)

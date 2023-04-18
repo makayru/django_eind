@@ -4,19 +4,18 @@
 {% load static %}
   <div class="container">
     <div class="row justify-content-center">
-      {% for i in userprofile %}
         <div class="col-md-6 mb-4">
           <div class="text-center">
-            <h5>{{ i.user }}</h5>
+            <h5>{{ profile.user }}</h5>
 
-            {{ i.BioText }}
+            {{ profile.BioText }}
             <br>  
             <br>
             <div class="row">
               <div class="col-sm-6">
                 <small>location</small>
                 <br>
-                {{ i.City }}
+                {{ profile.City }}
               </div>
               <div class="col-sm-6 border-left">
                 <small>Books read</small>
@@ -43,7 +42,6 @@
               {% endfor %}
             </div>
           </div>
-      {% endfor %}
     </div>
   </div>
 {% endblock %}
