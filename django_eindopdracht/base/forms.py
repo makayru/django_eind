@@ -18,3 +18,9 @@ class AddReadActionForm(forms.ModelForm):
     class Meta:
         model = Read
         fields = ["Book", "Date", "Score"]
+
+
+class ExtAddReadActionForm(forms.ModelForm):
+    class Meta:
+        model = Read
+        fields = ["Date", "Score"]
