@@ -51,7 +51,7 @@
                             <img src="{% static 'base/images/' %}{{ book.id }}.jpg" alt="book image" class="book-cover">
                             <p>{{book.Title}}</p>
                         </a>
-                    </div>                      
+                    </div>        
                     {% endfor %}
                     <div class="col-md-12 text-center">
                         <a href={% url 'books' %} class="icon-text">VIEW ALL BOOKS</a>
