@@ -10,7 +10,9 @@
             {% for field in form %}
               <div class="form-group">
                 <label for="{{ field.id }}" class="form-label">{{ field.label }}</label>
-                {{ field }}
+                <div>
+                  {{ field }}
+                </div>
               </div>
             {% endfor %}
             <button type="submit" class="btn btn-primary">Add ReadAction</button>

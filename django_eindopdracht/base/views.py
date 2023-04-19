@@ -62,12 +62,6 @@ def AllBooks(request):
     return render(request, "base/books.html", context)
 
 
-def AllBooksAdmin(request):
-    books = Book.objects.filter(Apporved=True)
-    context = {"books": books}
-    return render(request, "base/adminbooks.html", context)
-
-
 def DeleteBooksAdmin(request, pk):
     book = Book.objects.get(pk=pk)
     Book.delete(book)
@@ -82,7 +76,7 @@ def EditBooksAdmin(request, pk):
         if form.is_valid():
             form.save()
             messages.success(request, "book updated succesfully.")
-            return redirect("admin_books")
+            return redirect("books")
     else:
         form = AddNewBookForm(instance=book)
 
@@ -184,7 +178,7 @@ def AddReadAction(request):
     context = {"form": form}
     return render(request, "base/newreadactionform.html", context)
 
-
+@login_required
 def ExtAddReadAction(request, book_id):
     if request.method == "POST":
         form = ExtAddReadActionForm(request.POST)
@@ -284,7 +278,7 @@ def News_feed(request):
     context = {"read_actions": read_actions}
     return render(request, "base/newsfeed.html", context)
 
-
+@login_required
 def user_profile(request, pk):
     user = get_object_or_404(Profile, pk=pk)
     reads = Read.objects.filter(User_id=pk)

@@ -28,7 +28,6 @@ urlpatterns = [
     path("my_profile/<int:pk>/", views.edit_profile, name="my_profile"),
     path("addnewbook/", views.AddNewBooks, name="addnewbook"),
     path("add_newbook/", views.AddNewBooksAdmin, name="add_newbook"),
-    path("admin_books", views.AllBooksAdmin, name="admin_books"),
     path("delete_book/<int:pk>", views.DeleteBooksAdmin, name="delete_book"),
     path("edit_book/<int:pk>", views.EditBooksAdmin, name="edit_book"),
     path("admin_readactions", views.AdminReadactions, name="admin_readactions" ),

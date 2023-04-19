@@ -80,15 +80,19 @@ li a:hover {
 }
 
 .book-cover {
-  max-width: 80%;
-  height: auto;
-  border-radius: 5px;
+  height: 300px;
+  object-fit: contain;
+  max-width: 100%;
+}
+.book-cover-detail{
+  height: 80%;
+  max-width: 100%;
 }
 
 .no-link-book-cover {
-  max-width: 80%;
-  height: auto;
-  border-radius: 5px;
+  height: 300px;
+  object-fit: contain;
+  max-width: 100%;
 }
 
 .book-cover:hover{
@@ -98,4 +102,46 @@ li a:hover {
 
 .book{
   padding-bottom: 5%;
+}
+
+.book-title{
+  font-family: Merriweather Light,serif;
+  font-size: 30px;
+  letter-spacing: -.02em;
+  line-height: 160%;
+  margin: 0 0 10px;
+}
+
+.book-author{
+  color: #333;
+    font-family: Roboto Medium,sans-serif;
+    font-size: 18px;
+    line-height: 148%;
+}
+
+.book-info{
+  font-weight: bold;
+}
+.button{
+  background-color: var(--secondary-color);
+  border: none;
+  color: white;
+  font-weight: 700;
+  padding: 11px 25px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 30px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.button:hover{
+  text-decoration: none;
+  color: white;
+}
+
+.edit-btn {
+width: auto;
+  
 }

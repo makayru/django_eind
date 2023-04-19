@@ -1,24 +1,23 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
+{% load static %}
+
   <div class="container">
     <h3> News Feed </h3>
     <p> Below are the latest book scores of all our members: </p>
     <div class="row">
-      {% for action in read_actions %}
-        <div class="col-md-6">
-          <div class="card mb-3">
-            <div class="card-body">
-              <h5 class="card-title">{{ action.Book }}</h5>
-              <p class="card-text">
-                <strong>Author:</strong> {{ action.Date }}<br>
-                <strong>Score:</strong> {{ action.Score }}<br>
-                <strong>read by:</strong> <a href="{% url 'user_profile' action.User.pk %}"> {{action.User}}</a>
-              </p>
-            </div>
-          </div>
-        </div>
-      {% endfor %}
+      {% for read in read_actions %}
+              <div class="col-md-3">
+                <a class="icon-text" href="{% url 'book_detail' read.Book.id %}">
+                    <img src="{% static 'base/images/' %}{{ read.Book.id }}.jpg" alt="book image" class="book-cover"><br>
+                    <strong>Date:</strong> {{read.Date}}<br>
+                    <strong>Score:</strong> {{read.Score}}<br>
+                    <a href="{% url 'user_profile' read.User.pk %}"><p><strong>User:</strong> {{read.User}}</a>
+
+                </a>
+              </div> 
+      {% endfor %}    
     </div>
   </div>
 {% endblock %}

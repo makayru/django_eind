@@ -6,19 +6,25 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4">
-            <img src="{% static 'base/images/' %}{{ book.id }}.jpg" alt="book image" class="book-cover">
+            <img src="{% static 'base/images/' %}{{ book.id }}.jpg" alt="book image" class="book-cover-details">
         </div>
-        <div class="col-md-8">
-            <h1>{{book.Title}}</h1>
-            <h3>By <u>{{book.Author}}</u></h3>
-            <br>
-            <p>{% lorem 1 b random  %}</p>
-            <br>
-            <h4>{{read_count}} people have read this book</h4>
-            <br>
-            <h4>Average score: {{ average_score }}</h4>
+        <div class="col-md-6">
+            <h1 class="book-title">{{book.Title}}</h1>
+            <p class="book-author">By <u>{{book.Author}}</u></p>
+            <p>{{book.Description}}</p>
+            <p class="read-count">{{read_count}} PEOPLE HAVE READ THIS BOOK</p>
+            <a class="button" href="{% url 'extaddreadaction' book.id %}">Add Read Action</a>
+            {% if user.is_staff %}
+                <form method="POST" action="{% url 'delete_book' book.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="delete">
+                    <a class="button" href="{% url 'edit_book' book.id %}"><i class="bi bi-pencil"></i></a>
+                    <button type="submit" class="button"><i class="bi bi-trash3"></i></button><br><br>
+                </form>
+            {% endif %}
+            <p class="book-info">{{book.NumberOfPages}} pages<br>
+                <i class="bi bi-star-fill" style="color:red;"></i>Average score: {{ average_score }}<br></p>
         </div>
-        <li><a href="{% url 'extaddreadaction' book.id %}" class="nav-item">Add Read Action</a></li>
     </div>
 </div>
 {% endblock %}

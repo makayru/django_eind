@@ -14,6 +14,7 @@
                 <strong>Genre:</strong> {{ i.Genre }}<br>
                 <strong>Number of pages:</strong> {{ i.NumberOfPages }}<br>
               </p>
+              {% if user.is_staff %}
               <form method="POST" action="{% url 'delete_book' i.pk %}">
                 {% csrf_token %}
                 <input type="hidden" name="action" value="delete">
@@ -26,6 +27,7 @@
                   </div>
                 </div>
               </form>
+              {% endif %}
             </div>
           </div>
         </div>

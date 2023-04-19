@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
 class Profile(models.Model):
@@ -18,6 +19,7 @@ def create_user_profile(sender, instance, created, **kwargs):
 
 class Book(models.Model):
     Title = models.CharField(max_length=100)
+    Description = models.TextField(null=True, blank=True)
     Author = models.CharField(max_length=100)
     Genre = models.CharField(max_length=100)
     NumberOfPages = models.IntegerField()
@@ -30,6 +32,7 @@ class Read(models.Model):
     Book = models.ForeignKey(Book, on_delete=models.CASCADE)
     User = models.ForeignKey(User, on_delete=models.CASCADE)
     Date = models.DateField()
-    Score = models.IntegerField()
+    Score = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
+    
     def __str__(self):
         return f"{self.Book.Title} by {self.User.get_username()}"

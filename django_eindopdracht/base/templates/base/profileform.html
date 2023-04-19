@@ -7,7 +7,10 @@
         <div class="form-container">
           <form method="post" class="mx-auto">
             {% csrf_token %}
-            <p>Username: <input type="text" name="username" value="{{ user.username }}" disabled /></p>
+            <div class="form-group">
+              <label for="id_username">Username:</label>
+              <input type="text" name="username" value="{{ user.username }}" class="form-control" disabled />
+            </div>
             {% for field in form %}
               <div class="form-group">
                 <label for="{{ field.id }}" class="form-label">{{ field.label }}</label>
