@@ -1,33 +1,40 @@
-{% extends 'base/base.html' %}
-
-{% block content %}
+{% extends 'base/base.html' %} {% block content %}
 
 <div class="container">
-    <div class="row">
-        {% for r in read_actions %}
-        <div class="col-md-6">
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">{{ r.Book }}</h5>
-                    <p class="card-text">
-                        <strong>Date:</strong> {{ r.Date }}<br>
-                        <strong>Score:</strong> {{r.Score }}<br>
-                    </p>
-                    <form method="POST" action="{% url 'delete_read' r.pk %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="action" value="delete">
-                        <div class="row">
-                            <div class="col-md-6">
-                            </div>
-                            <div class="col-md-6">
-                                <button type="submit" class="btn btn-danger btn-block">Delete</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+  {% if messages %} {% for message in messages %}
+  <div
+    class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% endif %}"
+    role="alert"
+  >
+    {{ message }}
+  </div>
+  {% endfor %} {% endif %}
+  <div class="row">
+    {% for r in read_actions %}
+    <div class="col-md-6">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">{{ r.Book }}</h5>
+          <p class="card-text">
+            <strong>Date:</strong> {{ r.Date }}<br />
+            <strong>Score:</strong> {{r.Score }}<br />
+          </p>
+          <form method="POST" action="{% url 'delete_read' r.pk %}">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="delete" />
+            <div class="row">
+              <div class="col-md-6"></div>
+              <div class="col-md-6">
+                <button type="submit" class="btn btn-danger btn-block">
+                  Delete
+                </button>
+              </div>
             </div>
+          </form>
         </div>
-        {% endfor %}
+      </div>
     </div>
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}

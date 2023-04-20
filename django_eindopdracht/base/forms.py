@@ -36,6 +36,10 @@ class ExtAddReadActionForm(forms.ModelForm):
     class Meta:
         model = Read
         fields = ('Date' ,'Score')
+        widgets = {
+            'Date': forms.DateInput(attrs={'class': 'form-control'}),
+        }
+
 
     def clean_Score(self):
         score = self.cleaned_data['Score']

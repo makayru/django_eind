@@ -1,22 +1,30 @@
-{% extends 'base/base.html' %}
+{% extends 'base/base.html' %} {% block content %}
+<div class="container">
+  {% if messages %} {% for message in messages %}
+  <div
+    class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% endif %}"
+    role="alert"
+  >
+    {{ message }}
+  </div>
+  {% endfor %} {% endif %}
 
-{% block content %}
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="form-container">
-          <form method="post" class="mx-auto">
-            {% csrf_token %}
-            {% for field in form %}
-              <div class="form-group">
-                <label for="{{ field.id }}" class="form-label">{{ field.label }}</label>
-                {{ field }}
-              </div>
-            {% endfor %}
-            <button type="submit" class="btn btn-primary">Sign up</button>
-          </form>
-        </div>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="form-container">
+        <form method="post" class="mx-auto">
+          {% csrf_token %} {% for field in form %}
+          <div class="form-group">
+            <label for="{{ field.id }}" class="form-label"
+              >{{ field.label }}</label
+            >
+            {{ field }}
+          </div>
+          {% endfor %}
+          <button type="submit" class="btn btn-primary">Sign up</button>
+        </form>
       </div>
     </div>
   </div>
+</div>
 {% endblock %}

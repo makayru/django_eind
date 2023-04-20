@@ -4,32 +4,28 @@
   --tertiary-color: #393053;
   --dark-color: #18122B;
 }
-
-/* menu styling */
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
+.nav-link{
+  color: #333;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  font-size: 15px;
 
 }
-
-li {
-  float: left;
+p{
+  font-family: 'Chivo Mono', monospace;
+}
+.dropdown-item{
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: .1em;
+  text-transform: uppercase;
 }
 
-li a {
-  display: block;
-  color: #DEF2f1;
-  color: var(--primary-color);
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-li a:hover {
-  color: #17252A;
-  color: var(--tertiary-color);
+.dropdown-icon{
+  font-size: 20px !important;
+  font-weight: 900;
+  color:blue !important; 
 }
 
 
@@ -39,7 +35,6 @@ li a:hover {
 }
 
 .form-control {
-  background-color: var(--tertiary-color);
   border-color: var(--primary-color);
   color: var(--dark-color);
 }
@@ -84,8 +79,8 @@ li a:hover {
   object-fit: contain;
   max-width: 100%;
 }
-.book-cover-detail{
-  height: 80%;
+.book-cover-details{
+  height: 500px;
   max-width: 100%;
 }
 
@@ -105,7 +100,7 @@ li a:hover {
 }
 
 .book-title{
-  font-family: Merriweather Light,serif;
+  font-family: "Merriweather Light,serif";
   font-size: 30px;
   letter-spacing: -.02em;
   line-height: 160%;

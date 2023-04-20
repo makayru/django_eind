@@ -1,37 +1,49 @@
-{% extends 'base/base.html' %}
+{% extends 'base/base.html' %} {% block content %}
 
-{% block content %}
-
-  <div class="container">
-    <div class="row">
-      {% for i in books %}
-        <div class="col-md-6">
-          <div class="card mb-3">
-            <div class="card-body">
-              <h5 class="card-title">{{ i.Title }}</h5>
-              <p class="card-text">
-                <strong>Author:</strong> {{ i.Author }}<br>
-                <strong>Genre:</strong> {{ i.Genre }}<br>
-                <strong>Number of pages:</strong> {{ i.NumberOfPages }}<br>
-              </p>
-              {% if user.is_staff %}
-              <form method="POST" action="{% url 'delete_book' i.pk %}">
-                {% csrf_token %}
-                <input type="hidden" name="action" value="delete">
-                <div class="row">
-                  <div class="col-md-6">
-                    <a href="{% url 'edit_book' i.pk %}" class="btn btn-primary btn-block">Edit</a>
-                  </div>
-                  <div class="col-md-6">
-                    <button type="submit" class="btn btn-danger btn-block">Delete</button>
-                  </div>
-                </div>
-              </form>
-              {% endif %}
-            </div>
-          </div>
-        </div>
-      {% endfor %}
-    </div>
+<div class="container">
+  {% if messages %} {% for message in messages %}
+  <div
+    class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% endif %}"
+    role="alert"
+  >
+    {{ message }}
   </div>
+  {% endfor %} {% endif %}
+  <div class="row">
+    {% for i in books %}
+    <div class="col-md-6">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">{{ i.Title }}</h5>
+          <p class="card-text">
+            <strong>Author:</strong> {{ i.Author }}<br />
+            <strong>Genre:</strong> {{ i.Genre }}<br />
+            <strong>Number of pages:</strong> {{ i.NumberOfPages }}<br />
+          </p>
+          {% if user.is_staff %}
+          <form method="POST" action="{% url 'delete_book' i.pk %}">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="delete" />
+            <div class="row">
+              <div class="col-md-6">
+                <a
+                  href="{% url 'edit_book' i.pk %}"
+                  class="btn btn-primary btn-block"
+                  >Edit</a
+                >
+              </div>
+              <div class="col-md-6">
+                <button type="submit" class="btn btn-danger btn-block">
+                  Delete
+                </button>
+              </div>
+            </div>
+          </form>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
 {% endblock %}

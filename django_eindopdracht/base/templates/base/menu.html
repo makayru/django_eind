@@ -1,30 +1,44 @@
-{%load static%}
-<nav>
-  <ul>
-    {% if user.is_authenticated  %}
-    <li><a href="{% url 'index' %}">Home</a></li>
-    <li><a href="{% url 'books' %}">All Books</a></li>
-    <li><a href="{% url 'myprofile' %}" class="nav-item">My Profile</a></li>
-    <li><a href="{% url 'addnewbook' %}" class="nav-item">Add Book</a></li>
-    <li><a href="{% url 'addreadaction' %}" class="nav-item">Add Read Action</a></li>
-    <li><a href="{% url 'myreadactions' %}" class="nav-item">My Read Actions</a></li>
-    <li><a href="{% url 'newsfeed' %}" class="nav-item">News feed</a></li>
-    <li><a href="{% url 'logout' %}" class="nav-item">Logout</a></li>
+<nav class="navbar navbar-expand-lg">
+  <div class="navbar-nav">
+    {% if user.is_authenticated%}
+    <li class="nav-item dropdown">
+      <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Book<i class="bi bi-chevron-down dropdown-icon"></i></a>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="{% url 'books' %}">All Books</a>
+        <a class="dropdown-item" href="{% url 'addnewbook' %}">Add Book</a>
+        {% if user.is_staff  %}
+        <a class="dropdown-item" href="{% url 'unapprovedbooks' %}">Unapproved Books</a>
+        <a class="dropdown-item" href="{% url 'add_newbook' %}">Add New Book</a>
+        {% endif %}
+      </div>
+    </li>
+    <li class="nav-item dropdown">
+      <a class="nav-link " href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Read<i class="bi bi-chevron-down dropdown-icon"></i></a>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="{% url 'addreadaction' %}">Add Read Action</a>
+        <a class="dropdown-item" href="{% url 'myreadactions' %}">My Read Actions</a>
+        {% if user.is_staff  %}
+        <a class="dropdown-item" href="{% url 'admin_readactions' %}">All read actions</a>
+        {% endif %}
+        <a class="dropdown-item" href="{% url 'newsfeed' %}">News feed</a>
+      </div>
+    </li>
+    <li class="nav-item dropdown">
+      <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{user}}<i class="bi bi-chevron-down dropdown-icon"></i></a>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="{% url 'edit_profile' user.pk %}">Edit Profile</a>
+        <a class="dropdown-item" href="{% url 'myprofile' %}">My Profile</a>
+        <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+      </div>
+    </li>
     {% endif %}
 
-    {% if user.is_staff %}
-    <li><a href="{% url 'unapprovedbooks' %}" class="nav-item">Unapproved Books</a></li>
-    <li><a href="{% url 'add_newbook' %}" class="nav-item">Add New Book</a></li>
-    <li><a href="{% url 'admin_readactions' %}" class="nav-item">All read actions</a></li>
-
-    <li><a href="{% url 'logout' %}" class="nav-item">Logout</a></li>
-
-
-    {% else %}
-    <li><a href="{% url 'login' %}" class="nav-item">Login</a></li>
-    <li><a href="{% url 'register' %}" class="nav-item">Register</a></li>
+    {% if not user.is_authenticated and not user.is_staff %}
+    <li><a href="{% url 'newsfeed' %}" class="nav-link">News feed</a></li>    
+    <li><a href="{% url 'login' %}" class="nav-link">Login</a></li>
+    <li><a href="{% url 'register' %}" class="nav-link">Register</a></li>
     {% endif %}
 
 
-  </ul>
+  </div>
 </nav>

@@ -3,15 +3,27 @@
 {% load static %}
 
 <div class="container">
-    <div class="row">
+    {% if messages %} {% for message in messages %}
+    <div
+      class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% endif %}"
+      role="alert"
+    >
+      {{ message }}
+    </div>
+    {% endfor %} {% endif %}
+      <div class="row">
         <div class="col-md-4">
             <!-- User information -->
             <h1>User information</h1>
             {% for user in userprofile %}
-            <p>{{user.user}}</p>
+            <p><a href="{% url 'myprofile' %}" class="nav-item">{{user.user}}</a></p>
             <p>{{user.BioText}}</p>
             <p>{{user.City}}</p>
             {% endfor %}
+            <p><a class="icon-text" href="{% url 'books' %}">All Books</a></p>
+            <p><a class="icon-text" href="{% url 'addnewbook' %}" class="nav-item">Add Book</a></p>
+            <p><a class="icon-text" href="{% url 'addreadaction' %}" class="nav-item">Add Read Action</a></p>
+        
         </div>
         <div class="col-md-8">
             <!-- Other content -->
@@ -28,9 +40,11 @@
                     </div>
                     {% for feed in news_feed|slice:":4" %}
                     <div class="col-md-3">
-                        <img src="{% static 'base/images/' %}{{ feed.Book.id }}.jpg" alt="book image" class="no-link-book-cover">
-                        <a href="{% url 'user_profile' feed.User.pk %}"><p><strong>User:</strong> {{feed.User}}</a><br>
-                        <i class="bi bi-star-fill" style="color:red;"></i>{{feed.Score}}</p>
+                        <div class="text-center">
+                            <img src="{% static 'base/images/' %}{{ feed.Book.id }}.jpg" alt="book image" class="no-link-book-cover">
+                            <a href="{% url 'user_profile' feed.User.pk %}"><p><strong>User:</strong> {{feed.User}}</a><br>
+                            <i class="bi bi-star-fill" style="color:red;"></i>{{feed.Score}}</p>
+                        </div>
                     </div>
                     {% endfor %}
                     <div class="col-md-12 text-center">
@@ -71,7 +85,8 @@
                     <div class="col-md-3">
                         <a class="icon-text" href="{% url 'book_detail' read.Book.id %}">
                             <img src="{% static 'base/images/' %}{{ read.Book.id }}.jpg" alt="book image" class="book-cover">
-                            <p>{{read.Book.Title}}</p>
+                            <p>{{read.Book.Title}}<br>
+                            <i class="bi bi-star-fill" style="color:red;"></i>{{read.Score}}</p>
                         </a>
                     </div>    
                     {% endfor %}

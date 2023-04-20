@@ -12,20 +12,22 @@ from django.utils.timezone import make_aware
 from .models import Profile, Book, Read
 
 # Create your views here.
-@login_required
 def index(request):
     books = Book.objects.filter(Apporved=True)
     news_feed = Read.objects.all().order_by("-Date")[:10]
-    readactions = Read.objects.filter(User=request.user)
-    username = request.user.username
-    userprofile = Profile.objects.filter(user=request.user)
-    context = {
-        "userprofile": userprofile,
-        "username": username,
-        "books": books,
-        "readactions": readactions,
-        "news_feed": news_feed,
-    }
+    if request.user.is_authenticated:
+        readactions = Read.objects.filter(User=request.user)
+        username = request.user.username
+        userprofile = Profile.objects.filter(user=request.user)
+        context = {
+            "userprofile": userprofile,
+            "username": username,
+            "books": books,
+            "readactions": readactions,
+            "news_feed": news_feed,
+        }
+    else:
+        context = {"books": books, "news_feed": news_feed}
     return render(request, "base/index.html", context)
 
 
@@ -47,6 +49,8 @@ def edit_profile(request, pk):
         form = ProfileForm(request.POST, instance=profile)
         if form.is_valid():
             form.save()
+            messages.success(request, "Profile Succesfully Updated.")
+
             return redirect("index")
     else:
         form = ProfileForm(instance=profile)
@@ -65,6 +69,8 @@ def AllBooks(request):
 def DeleteBooksAdmin(request, pk):
     book = Book.objects.get(pk=pk)
     Book.delete(book)
+    messages.success(request, "Book Succesfully Deleted.")
+
     return redirect("admin_books")
 
 
@@ -75,8 +81,8 @@ def EditBooksAdmin(request, pk):
         form = AddNewBookForm(request.POST, instance=book)
         if form.is_valid():
             form.save()
-            messages.success(request, "book updated succesfully.")
-            return redirect("books")
+            messages.success(request, "Book Updated succesfully.")
+            return redirect("book_detail", pk)
     else:
         form = AddNewBookForm(instance=book)
 
@@ -93,6 +99,7 @@ def AdminReadactions(request):
 def DeleteReadActions(request, pk):
     readaction = Read.objects.get(pk=pk)
     Read.delete(readaction)
+    messages.success(request, "Read Action Succesfully Deleted.")
     return redirect("admin_readactions")
 
 
@@ -123,7 +130,8 @@ def AddNewBooks(request):
         form = AddNewBookForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("index")
+            messages.success(request, "Book Succesfully Added.")
+            return redirect("books")
     else:
         form = AddNewBookForm()
 
@@ -139,7 +147,8 @@ def AddNewBooksAdmin(request):
             book.Apporved = True
             book.ApporvedBy = request.user
             book.save()
-            return redirect("index")
+            messages.success(request, "Book Succesfully Added.")
+            return redirect("books")
     else:
         form = AddNewBookForm()
     context = {"form": form}
@@ -180,6 +189,7 @@ def AddReadAction(request):
 
 @login_required
 def ExtAddReadAction(request, book_id):
+    book = Book.objects.get(id=book_id)
     if request.method == "POST":
         form = ExtAddReadActionForm(request.POST)
 
@@ -187,7 +197,6 @@ def ExtAddReadAction(request, book_id):
             read_action = form.save(commit=False)
             read_action.Book = Book.objects.get(pk=book_id)
 
-            # Check if a read action for the same book and date already exists for the current user
             existing_read_action = Read.objects.filter(
                 User=request.user, Book=read_action.Book, Date=read_action.Date
             ).exists()
@@ -196,17 +205,17 @@ def ExtAddReadAction(request, book_id):
                     request,
                     "You have already added a read action for this book on the same day.",
                 )
-                return redirect("index")
+                return redirect("myreadactions")
             else:
                 read_action.User = request.user
                 read_action.save()
                 messages.success(
                     request, "Your read action has been added successfully."
                 )
-            return redirect("index")
+            return redirect("myreadactions")
     else:
         form = ExtAddReadActionForm()
-    context = {"form": form}
+    context = {"form": form, "book": book}
     return render(request, "base/extreadactionform.html", context)
 
 
@@ -219,7 +228,7 @@ def EditReadAction(request, pk):
         if form.is_valid():
             form.save()
             messages.success(request, "Read action updated succesfully.")
-            return redirect("index")
+            return redirect("myreadactions")
     else:
         form = AddReadActionForm(instance=readaction)
 
@@ -231,6 +240,8 @@ def EditReadAction(request, pk):
 def DeleteReadAction(request, pk):
     readaction = Read.objects.get(pk=pk)
     Read.delete(readaction)
+    messages.success(request, "Read action Deleted succesfully.")
+
     return render(request, "base/myreadactions.html")
 
 
@@ -247,6 +258,8 @@ def Approve_book(request, book_id):
     book.Apporved = True
     book.ApporvedBy = request.user
     book.save()
+    messages.success(request, "Book Succesfully Approved.")
+
     return redirect("unapprovedbooks")
 
 
@@ -256,14 +269,13 @@ def change_password(request):
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             form.save()
-            # Redirect to the success page after changing the password
+            messages.success(request, "Password Updated.")
             return redirect("password_change_done")
     else:
         form = PasswordChangeForm(request.user)
     return render(request, "registration/change_password.html", {"form": form})
 
 
-@login_required
 def book_detail(request, book_id):
     book = get_object_or_404(Book, id=book_id, Apporved=True)
     read_count = Read.objects.filter(Book=book).count()
@@ -272,13 +284,11 @@ def book_detail(request, book_id):
     return render(request, "base/book_detail.html", context)
 
 
-@login_required
 def News_feed(request):
     read_actions = Read.objects.all().order_by("-Date")
     context = {"read_actions": read_actions}
     return render(request, "base/newsfeed.html", context)
 
-@login_required
 def user_profile(request, pk):
     user = get_object_or_404(Profile, pk=pk)
     reads = Read.objects.filter(User_id=pk)

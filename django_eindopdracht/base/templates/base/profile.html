@@ -2,7 +2,16 @@
 
 {% block content %}
 {% load static %}
-  <div class="container">
+<div class="container">
+  {% if messages %} {% for message in messages %}
+  <div
+    class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% endif %}"
+    role="alert"
+  >
+    {{ message }}
+  </div>
+  {% endfor %} {% endif %}
+
     <div class="row justify-content-center">
       {% for i in userprofile %}
         <div class="col-md-6 mb-4">
