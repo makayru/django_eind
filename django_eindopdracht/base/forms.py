@@ -45,23 +45,25 @@ class CustomUserCreationForm(UserCreationForm):
 
         return user
     
-class AddNewBookForm(forms.ModelForm):
+class AddNewBookForm(forms.ModelForm) :
+    book_image = forms.FileField(required=False, label='Upload an image', widget=forms.ClearableFileInput(attrs={'class': 'form-control'}))
     class Meta:
         model = Book
-        fields = ["Title", "Description" ,"Author", "Genre", "NumberOfPages"]
+        fields = ["Title", "Description" ,"Author", "Genre", "NumberOfPages", "book_image"]
         widgets = {
             'Title': forms.TextInput(attrs={'class': 'form-control'}),
             'Description': forms.Textarea(attrs={'class': 'form-control'}),
             'Author': forms.TextInput(attrs={'class': 'form-control'}),
             'Genre': forms.TextInput(attrs={'class': 'form-control'}),
             'NumberOfPages': forms.NumberInput(attrs={'class': 'form-control'}),
+            'book_image': forms.FileInput(attrs={'class': 'form-control'}),
         }
     
     
 
 class AddReadActionForm(forms.ModelForm):
     SCORE_CHOICES = [(i, i) for i in range(1, 11)]
-    Score = forms.ChoiceField(choices=SCORE_CHOICES, label='Score')
+    Score = forms.ChoiceField(choices=SCORE_CHOICES, label='Score', widget=forms.Select(attrs={'class': 'form-control'}))
 
     class Meta:
         model = Read
@@ -82,7 +84,7 @@ class AddReadActionForm(forms.ModelForm):
 
 class ExtAddReadActionForm(forms.ModelForm):
     SCORE_CHOICES = [(i, i) for i in range(1, 11)]
-    Score = forms.ChoiceField(choices=SCORE_CHOICES, label='Score')
+    Score = forms.ChoiceField(choices=SCORE_CHOICES, label='Score', widget=forms.Select(attrs={'class': 'form-control'}))
 
     class Meta:
         model = Read

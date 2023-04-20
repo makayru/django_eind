@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import ProfileForm, AddNewBookForm, AddReadActionForm, ExtAddReadActionForm, CustomUserCreationForm
 from datetime import date
 from django.utils.timezone import make_aware
-
+import os, sys
 from .models import Profile, Book, Read
 
 # Create your views here.
@@ -78,8 +78,13 @@ def EditBooksAdmin(request, pk):
     book = Book.objects.get(pk=pk)
 
     if request.method == "POST":
-        form = AddNewBookForm(request.POST, instance=book)
+        form = AddNewBookForm(request.POST, request.FILES, instance=book)
         if form.is_valid():
+            if form.cleaned_data['book_image']:
+                book_image = form.cleaned_data['book_image']
+                with open(os.path.join(sys.path[0], f"base/static/base/images/{book.id}.jpg"), "wb+") as f:
+                    for chunk in book_image.chunks():
+                        f.write(chunk)
             form.save()
             messages.success(request, "Book Updated succesfully.")
             return redirect("book_detail", pk)
@@ -128,13 +133,18 @@ def register(requests):
 @login_required
 def AddNewBooks(request):
     if request.method == "POST":
-        form = AddNewBookForm(request.POST)
+        form = AddNewBookForm(request.POST, request.FILES)
         if form.is_valid():
             if request.user.is_superuser:
                 book = form.save(commit=False)
                 book.Apporved = True
                 book.ApporvedBy = request.user
                 book.save()
+                if form.cleaned_data['book_image']:
+                    book_image = form.cleaned_data['book_image']
+                    with open(os.path.join(sys.path[0], f"base/static/base/images/{book.id}.jpg"), "wb+") as f:
+                        for chunk in book_image.chunks():
+                            f.write(chunk)
             form.save()
             messages.success(request, "Book Succesfully Added.")
             return redirect("books")
