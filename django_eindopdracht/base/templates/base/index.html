@@ -16,13 +16,22 @@
             <!-- User information -->
             <h1>User information</h1>
             {% for user in userprofile %}
-            <p><a href="{% url 'myprofile' %}" class="nav-item">{{user.user}}</a></p>
+            <p><a href="{% url 'myprofile' %}" class="nav-item">{{user.FirstName}} {{ user.LastName}}</a></p>
+            <hr>
             <p>{{user.BioText}}</p>
-            <p>{{user.City}}</p>
+            <hr>
+            <p>{{user.Email}}</p>
             {% endfor %}
+            <hr>
             <p><a class="icon-text" href="{% url 'books' %}">All Books</a></p>
+            <hr>
             <p><a class="icon-text" href="{% url 'addnewbook' %}" class="nav-item">Add Book</a></p>
-            <p><a class="icon-text" href="{% url 'addreadaction' %}" class="nav-item">Add Read Action</a></p>
+            <hr>
+            <p><a class="icon-text" href="{% url 'myreadactions' %}" class="nav-item">My Book Shelve</a></p>
+            <hr>
+            <p><a class="icon-text" href="{% url 'myprofile' %}">My Profile</a></p>
+            <hr>
+            <p><a class="icon-text" href="{% url 'edit_profile' user.pk%}">Edit Profile</a></p>
         
         </div>
         <div class="col-md-8">
