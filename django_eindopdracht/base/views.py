@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from .forms import ProfileForm, AddNewBookForm, AddReadActionForm, ExtAddReadActionForm
+from .forms import ProfileForm, AddNewBookForm, AddReadActionForm, ExtAddReadActionForm, CustomUserCreationForm
 from datetime import date
 from django.utils.timezone import make_aware
 
@@ -112,13 +112,14 @@ def MyReadActions(request):
 
 def register(requests):
     if requests.method == "POST":
-        form = UserCreationForm(requests.POST)
+        form = CustomUserCreationForm(requests.POST)
         if form.is_valid():
             user = form.save()
             login(requests, user)
-            return redirect("index")
+            messages.success(requests, "Welcome to our website! Tell us about yourself by adding a Biography.")
+            return redirect("edit_profile", requests.user.pk)
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
 
     context = {"form": form}
     return render(requests, "registration/register.html", context)
@@ -129,6 +130,11 @@ def AddNewBooks(request):
     if request.method == "POST":
         form = AddNewBookForm(request.POST)
         if form.is_valid():
+            if request.user.is_superuser:
+                book = form.save(commit=False)
+                book.Apporved = True
+                book.ApporvedBy = request.user
+                book.save()
             form.save()
             messages.success(request, "Book Succesfully Added.")
             return redirect("books")
@@ -138,21 +144,6 @@ def AddNewBooks(request):
     context = {"form": form}
     return render(request, "base/newbookform.html", context)
 
-
-def AddNewBooksAdmin(request):
-    if request.method == "POST":
-        form = AddNewBookForm(request.POST)
-        if form.is_valid():
-            book = form.save(commit=False)
-            book.Apporved = True
-            book.ApporvedBy = request.user
-            book.save()
-            messages.success(request, "Book Succesfully Added.")
-            return redirect("books")
-    else:
-        form = AddNewBookForm()
-    context = {"form": form}
-    return render(request, "base/newbookform.html", context)
 
 
 @login_required

@@ -21,31 +21,29 @@
       <h1 class="book-title">{{book.Title}}</h1>
       <p class="book-author">By <u>{{book.Author}}</u></p>
       <p>{{book.Description}}</p>
-      <p class="read-count">
-        {% if read_count == 1 %}
-        {{read_count}} PERSON HAS READ THIS BOOK
-        {% else %}
-        {{read_count}} PEOPLE HAVE READ THIS BOOK
-        {% endif %}
-      </p>
       <a class="button" href="{% url 'extaddreadaction' book.id %}"
-        >Add Read Action</a
+      >Add Read Action</a
       >
       {% if user.is_staff %}
       <form method="POST" action="{% url 'delete_book' book.id %}">
         {% csrf_token %}
         <input type="hidden" name="action" value="delete" />
         <a class="button" href="{% url 'edit_book' book.id %}"
-          ><i class="bi bi-pencil"></i
-        ></a>
-        <button type="submit" class="button">
-          <i class="bi bi-trash3"></i></button
-        ><br /><br />
-      </form>
-      {% endif %}
-      <p class="book-info">
-        {{book.NumberOfPages}} pages<br />
+        ><i class="bi bi-pencil"></i
+          ></a>
+          <button type="submit" class="button">
+            <i class="bi bi-trash3"></i></button
+            ><br /><br />
+          </form>
+          {% endif %}
+          <p class="book-info">
+            {{book.NumberOfPages}} pages<br />
+            {% if read_count == 1 %}
+            {{read_count}} Person has read this book<br />
+            {% else %}
+            {{read_count}} People have read this book<br />
         <i class="bi bi-star-fill" style="color: red"></i>Average score: {{average_score }}<br />
+        {% endif %}
       </p>
     </div>
   </div>

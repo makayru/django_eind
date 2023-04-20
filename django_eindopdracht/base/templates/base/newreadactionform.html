@@ -8,24 +8,23 @@
     {{ message }}
   </div>
   {% endfor %} {% endif %}
-
   <div class="row justify-content-center">
     <div class="col-md-6">
       <div class="form-container">
+        <h3 class="title">Add To Book Shelve </h3>
         <form method="post" class="mx-auto">
           {% csrf_token %} {% for field in form %}
           <div class="form-group">
-            <label for="{{ field.id }}" class="form-label"
+            <label for="{{ field.id }}" class="form-label d-block"
               >{{ field.label }}</label
             >
-            <div>
-              {{ field }} {{ field.errors }} {% if field.name == 'Date' %}
-              <small class="text-muted">Format: YYYY-MM-DD</small>
-              {% endif %}
-            </div>
+            {{ field }} {{ field.errors }} {% if field.name == 'Date' %}
+            <small class="text-muted">Format: YYYY-MM-DD</small>
+            {% endif %}
+
           </div>
           {% endfor %}
-          <button type="submit" class="btn btn-primary">Add ReadAction</button>
+          <button type="submit" class="btn btn-primary">Add Book</button>
         </form>
       </div>
     </div>

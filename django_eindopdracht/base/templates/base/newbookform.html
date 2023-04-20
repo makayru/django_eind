@@ -2,16 +2,18 @@
 <div class="container">
   {% if messages %} {% for message in messages %}
   <div
-    class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% endif %}"
-    role="alert"
+  class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% endif %}"
+  role="alert"
   >
-    {{ message }}
+  {{ message }}
   </div>
   {% endfor %} {% endif %}
-
+  
   <div class="row justify-content-center">
     <div class="col-md-6">
       <div class="form-container">
+        <h3 class="title">Make A Book Request</h3>
+        <small><p>Cant find the book you are looking for?<br> Make a request and we will add it to our website.</p></small>
         <form method="post" class="mx-auto">
           {% csrf_token %} {% for field in form %}
           <div class="form-group">
@@ -21,7 +23,7 @@
             {{ field }}
           </div>
           {% endfor %}
-          <button type="submit" class="btn btn-primary">Add Book</button>
+          <button type="submit" class="btn btn-primary">Add Request</button>
         </form>
       </div>
     </div>

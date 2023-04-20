@@ -1,17 +1,62 @@
 from django import forms
 from .models import Profile, Book, Read
-
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ["BioText", "City"]
+        fields = ["FirstName", "LastName", "Email" ,"BioText", "City"]
+        widgets = {
+            'FirstName': forms.TextInput(attrs={'class': 'form-control'}),
+            'LastName': forms.TextInput(attrs={'class': 'form-control'}),
+            'Email': forms.TextInput(attrs={'class': 'form-control'}),
+            'BioText': forms.Textarea(attrs={'class': 'form-control'}),
+            'City': forms.TextInput(attrs={'class': 'form-control'}),
+        }
 
 
+class CustomUserCreationForm(UserCreationForm):
+    first_name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    last_name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    city = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'username', 'email',  'city']
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.TextInput(attrs={'class': 'form-control'}),
+            'password1': forms.PasswordInput(attrs={'class': 'form-control'}),
+            'password2': forms.PasswordInput(attrs={'class': 'form-control'}),        }
+
+        
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.save()
+
+        profile = user.profile
+        profile.FirstName = self.cleaned_data.get('first_name')
+        profile.LastName = self.cleaned_data.get('last_name')
+        profile.City = self.cleaned_data.get('city')
+        profile.Email = self.cleaned_data.get('email')
+        profile.save()
+
+        return user
+    
 class AddNewBookForm(forms.ModelForm):
     class Meta:
         model = Book
         fields = ["Title", "Description" ,"Author", "Genre", "NumberOfPages"]
+        widgets = {
+            'Title': forms.TextInput(attrs={'class': 'form-control'}),
+            'Description': forms.Textarea(attrs={'class': 'form-control'}),
+            'Author': forms.TextInput(attrs={'class': 'form-control'}),
+            'Genre': forms.TextInput(attrs={'class': 'form-control'}),
+            'NumberOfPages': forms.NumberInput(attrs={'class': 'form-control'}),
+        }
+    
     
 
 class AddReadActionForm(forms.ModelForm):
@@ -21,6 +66,12 @@ class AddReadActionForm(forms.ModelForm):
     class Meta:
         model = Read
         fields = ('Book', 'Date' ,'Score')
+        widgets = {
+            'Book': forms.Select(attrs={'class': 'form-control'}),
+            'Date': forms.DateInput(attrs={'class': 'form-control'}),
+            'Score': forms.Select(attrs={'class': 'form-control'}),
+
+        }
 
     def clean_Score(self):
         score = self.cleaned_data['Score']
@@ -38,6 +89,7 @@ class ExtAddReadActionForm(forms.ModelForm):
         fields = ('Date' ,'Score')
         widgets = {
             'Date': forms.DateInput(attrs={'class': 'form-control'}),
+            'Score': forms.Select(attrs={'class': 'form-control'}),
         }
 
 
@@ -46,3 +98,5 @@ class ExtAddReadActionForm(forms.ModelForm):
         if int(score) < 1 or int(score) > 10:
             raise forms.ValidationError('Score must be between 1 and 10.')
         return score
+
+    

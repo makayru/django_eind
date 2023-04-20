@@ -8,17 +8,16 @@
         <a class="dropdown-item" href="{% url 'addnewbook' %}">Add Book</a>
         {% if user.is_staff  %}
         <a class="dropdown-item" href="{% url 'unapprovedbooks' %}">Unapproved Books</a>
-        <a class="dropdown-item" href="{% url 'add_newbook' %}">Add New Book</a>
         {% endif %}
       </div>
     </li>
     <li class="nav-item dropdown">
-      <a class="nav-link " href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Read<i class="bi bi-chevron-down dropdown-icon"></i></a>
+      <a class="nav-link " href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Book Shelve<i class="bi bi-chevron-down dropdown-icon"></i></a>
       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="{% url 'addreadaction' %}">Add Read Action</a>
-        <a class="dropdown-item" href="{% url 'myreadactions' %}">My Read Actions</a>
+        <a class="dropdown-item" href="{% url 'addreadaction' %}">Add To Book Shelve</a>
+        <a class="dropdown-item" href="{% url 'myreadactions' %}">My Book Shelve</a>
         {% if user.is_staff  %}
-        <a class="dropdown-item" href="{% url 'admin_readactions' %}">All read actions</a>
+        <a class="dropdown-item" href="{% url 'admin_readactions' %}">All Book Shelves</a>
         {% endif %}
         <a class="dropdown-item" href="{% url 'newsfeed' %}">News feed</a>
       </div>

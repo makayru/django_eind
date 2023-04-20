@@ -6,7 +6,10 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
 class Profile(models.Model):
-    BioText = models.CharField(max_length=100)
+    FirstName = models.CharField(max_length=100)
+    LastName = models.CharField(max_length=100)
+    Email = models.EmailField(max_length=100)
+    BioText = models.TextField(null=True, blank=True)
     City = models.CharField(max_length=100)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     def __str__(self):

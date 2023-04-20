@@ -16,20 +16,18 @@
       {% for i in userprofile %}
         <div class="col-md-6 mb-4">
           <div class="text-center">
-            <h5>{{ i.user }}</h5>
-
-            {{ i.BioText }}
-            <br>  
+            <h3 class="title">{{ i.user }}</h3>
+            <p>{{i.FirstName}} {{i.LastName}}</p>
+            <p>{{ i.BioText }}</p>
             <br>
+            <br>  
             <div class="row">
               <div class="col-sm-6">
-                <small>location</small>
-                <br>
+                <p class="book-info">location</p>
                 {{ i.City }}
               </div>
               <div class="col-sm-6 border-left">
-                <small>Books read</small>
-                <br>
+                <p class="book-info">Books read</p>
                 {{reads.count}}
               </div>
             </div>

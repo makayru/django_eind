@@ -13,7 +13,7 @@
   font-size: 15px;
 
 }
-p{
+p, a{
   font-family: 'Chivo Mono', monospace;
 }
 .dropdown-item{
@@ -27,17 +27,69 @@ p{
   font-weight: 900;
   color:blue !important; 
 }
+@keyframes fade-in {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
 
+@keyframes fade-out {
+  from {opacity: 1;}
+  to {opacity: 0;}
+}
+
+
+.dropdown.show .dropdown-menu {
+  animation: fade-in 0.5s ease-in-out forwards;
+}
 
 /* form styling */
 .form-label {
   color: var(--primary-color);
 }
 
-.form-control {
-  border-color: var(--primary-color);
-  color: var(--dark-color);
+.form-control{
+  color: #4E4C97;
+  background: #F7F8F9;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  height: 40px;
+  padding: 6px 12px;
+  border-radius: 5px;
+  border: 2px solid #F2F5F6;
+  box-shadow: none;
 }
+
+.form-control:focus{
+  border-color: var(--primary-color);
+  box-shadow: none;
+}
+.form-container{
+  background-color: #fff;
+  font-family: 'Chivo Mono', monospace;
+  border-radius: 10px;
+  box-shadow: 0 0 25px -15px var(--dark-color);
+  position: relative;
+  padding: 2rem;
+}
+.form-container:before,
+.form-container:after{
+  content: '';
+  background-color: #4E4C97;
+  height: 50%;
+  width: 4px;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
+.form-container:after{
+  left: auto;
+  right: 10px;
+  top: auto;
+  bottom: 10px;
+}
+
+
 
 .btn-primary {
   background-color: var(--secondary-color);
@@ -51,12 +103,6 @@ p{
 
 .btn-primary:focus {
   box-shadow: 0 0 0 0.2rem var(--primary-color);
-}
-
-.form-container {
-  border: 1px solid var(--primary-color);
-  padding: 2rem;
-  border-radius: 1rem;
 }
 
 /* card styling (see All Books Page for example ) */
@@ -98,6 +144,12 @@ p{
 .book{
   padding-bottom: 5%;
 }
+.title{
+  color: var(--primary-color);
+  font-size: 25px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
 
 .book-title{
   font-family: "Merriweather Light,serif";
@@ -109,13 +161,19 @@ p{
 
 .book-author{
   color: #333;
-    font-family: Roboto Medium,sans-serif;
+    font-family: 'Chivo Mono', monospace;
     font-size: 18px;
     line-height: 148%;
+    letter-spacing: .1em;
+
+
 }
 
 .book-info{
-  font-weight: bold;
+  font-weight: 600;
+  font-family: 'Chivo Mono', monospace;
+  letter-spacing: .1em;
+
 }
 .button{
   background-color: var(--secondary-color);

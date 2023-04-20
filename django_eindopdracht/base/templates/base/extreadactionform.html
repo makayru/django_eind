@@ -11,6 +11,7 @@
   <div class="row justify-content-center">
     <div class="col-md-6">
       <div class="form-container">
+        <h3 class="title">Add To Book Shelve </h3>
         <input type="text" class="form-control" value="{{book.Title}}" disabled>
         <form method="post" class="mx-auto">
           {% csrf_token %} {% for field in form %}
@@ -24,7 +25,7 @@
 
           </div>
           {% endfor %}
-          <button type="submit" class="btn btn-primary">Add ReadAction</button>
+          <button type="submit" class="btn btn-primary">Add Book</button>
         </form>
       </div>
     </div>
