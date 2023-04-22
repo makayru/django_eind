@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg">
   <div class="navbar-nav">
-    <a class="nav-link"  href="{% url 'newsfeed' %}" role="button" >News feed<i class=" dropdown-icon"></i></a>
     {% if user.is_authenticated%}
+    <a class="nav-link"  href="{% url 'newsfeed' %}" role="button" >News feed<i class=" dropdown-icon"></i></a>
     <li class="nav-item dropdown">
       <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Book<i class="bi bi-chevron-down dropdown-icon"></i></a>
       <div class="dropdown-menu" aria-labelledby="navbarDropdown">

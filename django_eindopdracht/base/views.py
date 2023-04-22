@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.db.models import Avg
+from django.http import HttpResponseNotAllowed
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
@@ -256,13 +257,19 @@ def UnapprovedBooks(request):
 @login_required
 def Approve_book(request, book_id):
     book = Book.objects.get(id=book_id)
-    book.Apporved = True
-    book.ApporvedBy = request.user
-    book.save()
-    messages.success(request, "Book Succesfully Approved.")
-
-    return redirect("unapprovedbooks")
-
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        if action == 'approve':
+            book.Apporved = True
+            book.ApporvedBy = request.user
+            book.save()
+            messages.success(request, "Book Succesfully Approved.")
+        elif action == 'deny':
+            book.delete()
+            messages.success(request, "Book Succesfully Denied.")
+        return redirect("unapprovedbooks")
+    else:
+        return HttpResponseNotAllowed(['POST'])
 
 @login_required
 def change_password(request):
