@@ -14,6 +14,7 @@ from .models import Profile, Book, Read
 from django.db.models import Q
 
 # Create your views here.
+@login_required
 def index(request):
     books = Book.objects.filter(Apporved=True)
     news_feed = Read.objects.all().order_by("-Date")[:10]
@@ -61,7 +62,7 @@ def edit_profile(request, pk):
     return render(request, "base/profileform.html", context)
 
 
-@login_required
+
 def AllBooks(request):
     books = Book.objects.filter(Apporved=True)
     context = {"books": books}

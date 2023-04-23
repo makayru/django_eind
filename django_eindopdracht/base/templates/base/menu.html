@@ -33,6 +33,7 @@
     {% endif %}
 
     {% if not user.is_authenticated and not user.is_staff %}
+    <li><a href="{% url 'books' %}" class="nav-link">All Books</a></li>    
     <li><a href="{% url 'newsfeed' %}" class="nav-link">News feed</a></li>    
     <li><a href="{% url 'login' %}" class="nav-link">Login</a></li>
     <li><a href="{% url 'register' %}" class="nav-link">Register</a></li>
