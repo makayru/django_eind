@@ -1,32 +1,34 @@
-{% extends 'base/base.html' %} {% block content %} {% load static %}
+{% extends 'base/base.html' %} 
+{% block content %} 
+{% load static %}
+
 <div class="container">
-  {% if messages %} {% for message in messages %}
-  <div
-    class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% endif %}"
-    role="alert"
-  >
-    {{ message }}
-  </div>
-  {% endfor %} {% endif %}
-  <div class="row justify-content-center">
-    <hr />
-    <div class="row">
-      {% for i in books %}
-      <div class="col-md-4">
-        <div class="text-center">
-          <a class="icon-text" href="{% url 'book_detail' i.id %}">
-            <img
-              src="{% static 'base/images/' %}{{ i.id }}.jpg"
-              alt="book image"
-              class="book-cover"
-            /><br />
-            <strong>Title:</strong> {{i.Title}}<br />
-            <strong>Author:</strong> {{i.Author}}<br /> </a
-          ><br />
-        </div>
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% endif %}" role="alert">
+        {{ message }}
       </div>
-      {% endfor %}
+    {% endfor %}
+  {% endif %}
+  
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      <div class="row">
+        {% for i in books %}
+          <div class="col-md-3">
+            <div class="text-center">
+              <a class="icon-text" href="{% url 'book_detail' i.id %}">
+                <img src="{% static 'base/images/' %}{{ i.id }}.jpg" alt="book image" class="book-cover {% if results|length == 1 %}single-book{% endif %}"/><br />
+                <strong>Title:</strong> {{i.Title}}<br />
+                <strong>Author:</strong> {{i.Author}}<br />
+              </a>
+            </div>
+          </div>
+
+        {% endfor %}
+      </div>
     </div>
   </div>
 </div>
+
 {% endblock %}

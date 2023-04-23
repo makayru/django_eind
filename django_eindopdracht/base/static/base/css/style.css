@@ -15,7 +15,13 @@
 }
 p, a{
   font-family: 'Chivo Mono', monospace;
+  color: var(--dark-color);
 }
+
+a:hover{
+  color: var(--dark-color);
+}
+
 .dropdown-item{
   font-family: 'Montserrat', sans-serif;
   letter-spacing: .1em;
@@ -40,6 +46,11 @@ p, a{
 
 .dropdown.show .dropdown-menu {
   animation: fade-in 0.5s ease-in-out forwards;
+}
+
+.search-bar
+{
+  margin-left: 50%;
 }
 
 /* form styling */
@@ -160,7 +171,6 @@ p, a{
 }
 
 .book-author{
-  color: #333;
     font-family: 'Chivo Mono', monospace;
     font-size: 18px;
     line-height: 148%;

@@ -11,6 +11,7 @@ from datetime import date
 from django.utils.timezone import make_aware
 import os, sys
 from .models import Profile, Book, Read
+from django.db.models import Q
 
 # Create your views here.
 def index(request):
@@ -72,7 +73,7 @@ def DeleteBooksAdmin(request, pk):
     Book.delete(book)
     messages.success(request, "Book Succesfully Deleted.")
 
-    return redirect("admin_books")
+    return redirect("books")
 
 
 def EditBooksAdmin(request, pk):
@@ -147,7 +148,7 @@ def AddNewBooks(request):
                         for chunk in book_image.chunks():
                             f.write(chunk)
             form.save()
-            messages.success(request, "Book Succesfully Added.")
+            messages.success(request, "Book Succesfully Requested.")
             return redirect("books")
     else:
         form = AddNewBookForm()
@@ -278,7 +279,7 @@ def change_password(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Password Updated.")
-            return redirect("password_change_done")
+            return redirect("login")
     else:
         form = PasswordChangeForm(request.user)
     return render(request, "registration/change_password.html", {"form": form})
@@ -304,3 +305,13 @@ def user_profile(request, pk):
     context = {"profile": user, "reads": reads}
     return render(request, "base/profiles.html", context)
 
+def search_results(request):
+    query = request.GET.get('q')
+    if query:
+        query = request.GET.get('q')
+        results = Book.objects.filter(Q(Title__icontains=query) | Q(Author__icontains=query) | Q(Genre__icontains=query))
+        
+    if query == "":
+        results = Book.objects.all()
+    context = {'results': results, 'query': query}
+    return render(request, 'base/search_results.html', context)

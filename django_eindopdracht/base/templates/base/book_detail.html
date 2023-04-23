@@ -19,7 +19,7 @@
     </div>
     <div class="col-md-6">
       <h1 class="book-title">{{book.Title}}</h1>
-      <p class="book-author">By <u>{{book.Author}}</u></p>
+      <p class="book-author">By <u><a href="{% url 'search_results' %}?q={{book.Author}}">{{book.Author}}</a></u></p>
       <p>{{book.Description}}</p>
       <a class="button" href="{% url 'extaddreadaction' book.id %}"
       >Add Read Action</a
@@ -37,6 +37,7 @@
           </form>
           {% endif %}
           <p class="book-info">
+            Genre: <u><a href="{% url 'search_results' %}?q={{book.Genre}}">{{book.Genre}}</a></u><br />
             {{book.NumberOfPages}} pages<br />
             {% if read_count == 1 %}
             {{read_count}} Person has read this book<br />

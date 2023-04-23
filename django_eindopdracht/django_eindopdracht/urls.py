@@ -43,5 +43,6 @@ urlpatterns = [
     path("change-password/", views.change_password, name="change_password"),
     path("book/<int:book_id>/", views.book_detail, name="book_detail"),
     path('user/<int:pk>/', views.user_profile, name='user_profile'),
-    
+    path('results/', views.search_results, name='search_results'),    
+    path('newbookform', views.AddNewBooks, name='newbookform'),
 ]

@@ -1,0 +1,44 @@
+{% extends 'base/base.html' %} {% block content %} {% load static %}
+
+<div class="container">
+  {% if messages %} {% for message in messages %}
+  <div
+    class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% endif %}"
+    role="alert"
+  >
+    {{ message }}
+  </div>
+  {% endfor %} {% endif %}
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      <h1 class="">Search Results for "{{ query }}"</h1>
+      <br />
+      <div class="row">
+        {% for i in results %}
+        <div class="col-md-3" style="margin-bottom: 30px">
+          <div class="text-center">
+            <a class="icon-text" href="{% url 'book_detail' i.id %}">
+              <img
+                src="{% static 'base/images/' %}{{ i.id }}.jpg"
+                alt="book image"
+                class="book-cover {% if results|length == 1 %}single-book{% endif %}"
+              /><br />
+            </a>
+            <p>
+              <strong>Title:</strong> {{i.Title}}<br />
+              <strong>Author: </strong
+              ><u
+                ><a href="{% url 'search_results' %}?q={{i.Author}}"
+                  >{{i.Author}}</a
+                ></u
+              >
+            </p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

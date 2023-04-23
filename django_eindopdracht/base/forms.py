@@ -56,7 +56,7 @@ class AddNewBookForm(forms.ModelForm) :
             'Author': forms.TextInput(attrs={'class': 'form-control'}),
             'Genre': forms.TextInput(attrs={'class': 'form-control'}),
             'NumberOfPages': forms.NumberInput(attrs={'class': 'form-control'}),
-            'book_image': forms.FileInput(attrs={'class': 'form-control'}),
+            'book_image': forms.FileInput(attrs={'class': 'form-control', "required": True}),
         }
     
     
@@ -74,6 +74,10 @@ class AddReadActionForm(forms.ModelForm):
             'Score': forms.Select(attrs={'class': 'form-control'}),
 
         }
+
+    def __init__(self, *args, **kwargs):
+        super(AddReadActionForm, self).__init__(*args, **kwargs)
+        self.fields['Book'].queryset = Book.objects.filter(Apporved=True)
 
     def clean_Score(self):
         score = self.cleaned_data['Score']
